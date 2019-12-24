@@ -72,7 +72,7 @@ public class RTPpacket {
 
 
   public void setRtpHeader() {
-    //TODO fill the header array of byte with RTP header fields
+    //TODO fill the header array of byte with RTP header fields DONE
     /*
     header[0] =
     header[1] =
@@ -87,6 +87,30 @@ public class RTPpacket {
     header[10] =
     header[11] =
      */
+    //Version 2 Bits, Padding 1 Bit, Extension 1 Bit, CC 4 Bit
+    header[0] |= (Version << 6) | (Padding << 5) | (Extension << 4 ) | CC;
+    //Payloadtype
+    header[1] = (byte) PayloadType;
+    //Sequenznumber HIGH
+    header[2] = (byte) (SequenceNumber >> 8);
+    //Sequenznumber LOW
+    header[3] = (byte) (SequenceNumber & 0xFF);
+    //Timestamp First 8 Bits
+    header[4] = (byte) (TimeStamp >> 24);
+    //Timestamp Next 8 Bits
+    header[5] = (byte) ((TimeStamp >> 16) & 0xFF );
+    //Timestamp Next 8 Bits
+    header[6] = (byte) ((TimeStamp >> 8) & 0xFF);
+    //Timestamp Last 8 Bits
+    header[7] = (byte) (TimeStamp & 0xFF);
+    //Ssrc first 8
+    header[8] = (byte) (Ssrc >> 24);
+    //Ssrc next 8
+    header[9] = (byte) ((Ssrc >> 16) & 0xFF);
+    //Ssrc next 8
+    header[10] = (byte) ((Ssrc >> 8) & 0xFF);
+    //Ssrc last 8
+    header[11] = (byte) (Ssrc  & 0xFF);
   }
 
 
