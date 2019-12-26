@@ -88,7 +88,7 @@ public class RTPpacket {
     header[11] =
      */
     //Version 2 Bits, Padding 1 Bit, Extension 1 Bit, CC 4 Bit
-    header[0] |= (Version << 6) | (Padding << 5) | (Extension << 4 ) | CC;
+    header[0] |= (Version << 6) | (Padding << 4) | (Extension << 3 ) | CC;
     //Payloadtype
     header[1] = (byte) PayloadType;
     //Sequenznumber HIGH
