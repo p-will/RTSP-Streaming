@@ -443,27 +443,29 @@ public class Server extends JFrame implements ActionListener, ChangeListener {
   /** Creates a OPTIONS response string
    * @return  Options string, starting with: Public: ...
    */
-  //TODO Complete the OPTIONS response
+  //TODO Complete the OPTIONS response | DONE
   private String options() {
-    return "....";
+    return "Public: DESCRIBE, SETUP, TEARDOWN, PLAY, PAUSE";
   }
 
 
   /** Creates a DESCRIBE response string in SDP format for current media */
-  //TODO Complete the DESCRIBE response
+  //TODO Complete the DESCRIBE response | DONE
   private String describe() {
     StringWriter rtspHeader = new StringWriter();
     StringWriter rtspBody = new StringWriter();
 
     // Write the body first so we can get the size later
     rtspBody.write("v=0" + CRLF);
-    rtspBody.write("...");
-    rtspBody.write("...");
-    rtspBody.write("...");
+    rtspBody.write("o=paul " + RTSP_ID + "IN IP4 localhost" + CRLF);
+    rtspBody.write("s=IT2 RTSP Streaming" + CRLF);
+    rtspBody.write("t=0 " + CRLF);
+    rtspBody.write("i=" + VideoFileName + CRLF);
+    rtspBody.write("m=video " + RTPsocket.getLocalPort() + "RTP/AVP " + CRLF);
 
-    rtspHeader.write("Content-Base: " + "");
-    rtspHeader.write("Content-Type: " + "");
-    rtspHeader.write("Content-Length: " + "");
+    rtspHeader.write("Content-Base: rtsp://" + VideoDir + VideoFileName + CRLF);
+    rtspHeader.write("Content-Type: " + "application/sdp" + CRLF);
+    rtspHeader.write("Content-Length: " + rtspBody.toString().length() + CRLF);
     rtspHeader.write(CRLF);
 
     return rtspHeader.toString() + rtspBody.toString();
