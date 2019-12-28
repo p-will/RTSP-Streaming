@@ -312,7 +312,7 @@ public class Server extends JFrame implements ActionListener, ChangeListener {
     if (fec) label = " fec ";
     else label = " media ";
     // TODO correct the if-instruction to work properly
-    if (random.nextDouble() > 0.0) {
+    if (random.nextDouble() > lossRate) {
       System.out.println("Send frame: " + imagenb + label);
       RTPsocket.send(senddp);
     } else {

@@ -257,8 +257,7 @@ public class Client {
         // Wait for the response
         if (parse_server_response() != 200) System.out.println("Invalid Server Response");
         else {
-          //TODO change RTSP state and print out new state to console an statusLabel
-          // state = ....
+          //TODO change RTSP state and print out new state to console an statusLabel | DONE
           state = PLAYING;
           statusLabel.setText("Playing");
           System.out.println("Playing");
@@ -442,19 +441,19 @@ public class Client {
           "Puffer: "
               + ""  //
               + " aktuelle Nr. / Summe empf.: "
-              + " / "
+              +   fec.getSeqNr() + " / " + fec.getNrReceived()
               + "");
       statsLabel.setText(
           "<html>Abspielzähler / verlorene Medienpakete // Bilder / verloren: "
               + ""
-              + " / "
+              +  fec.getPlayCounter() + " / " + fec.getNrLost()
               + ""
               + "<p/>"
               + "</html>");
       fecLabel.setText(
           "FEC: korrigiert / nicht korrigiert: "
               + ""
-              + " / "
+              +  fec.getNrCorrected() + " / " + fec.getNrNotCorrected()
               + ""
               + "  Ratio: "
               + "");

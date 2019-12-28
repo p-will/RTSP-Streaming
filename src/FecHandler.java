@@ -274,6 +274,21 @@ public class FecHandler {
    */
   private boolean checkCorrection(int nr) {
     //TODO complete this method!
+
+      //get Snr of corresponding fec packet
+      Integer currFec = fecNr.get(nr);
+      if(currFec == null)
+        return false;
+      //get involved media packets
+      List<Integer> currRTPList = fecList.get(currFec);
+      if(currRTPList == null)
+        return false;
+
+      //check if involved media packets match lost nr
+      for(int i: currRTPList){
+        if(i == nr)
+          return true;
+      }
     return false;
   }
 
@@ -285,7 +300,11 @@ public class FecHandler {
    */
   private RTPpacket correctRtp(int nr) {
     //TODO complete this method!
-    return fec.getLostRtp(nr);
+      RTPpacket correctedRTP = rtpStack.get(nr);
+
+      fec.addRtp(correctedRTP);
+
+      return fec.getLostRtp(nr);
   }
 
   /**
@@ -295,6 +314,14 @@ public class FecHandler {
    */
   private void clearStack(int nr) {
     //TODO complete this method!
+      Integer currFECNr = fecNr.get(nr);
+      int currTs = rtpStack.get(nr).TimeStamp;
+      rtpStack.remove(nr);
+      fecStack.remove(currFECNr);
+      fecNr.remove(nr);
+      fecList.remove(currFECNr);
+      tsList.remove(currTs);
+
   }
 
   // *************** Receiver Statistics ***********************************************************
