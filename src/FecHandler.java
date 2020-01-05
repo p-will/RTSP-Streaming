@@ -107,7 +107,7 @@ public class FecHandler {
 
   /** Reset of fec group and variables */
   private void clearSendGroup() {
-    // TODO1
+    // TODO
   }
 
   /**
@@ -156,7 +156,7 @@ public class FecHandler {
   private void rcvFecPacket(RTPpacket rtp) {
     // build fec from rtp
     fec = new FECpacket(rtp.getpacket(), rtp.getpacket().length);
-    // TODO remove comment for debugging
+    // TASK remove comment for debugging
     // fec.printHeaders();
 
     // stores fec
@@ -254,13 +254,13 @@ public class FecHandler {
     List<Integer> rtpList = tsList.get(ts); // list of RTPs with same time stamp
     if (rtpList == null) return list; // if list is empty
 
-    //TODO1 lost RTPs are not in the list but could perhaps be corrected -> check for snr
+    //TODO lost RTPs are not in the list but could perhaps be corrected -> check for snr
     //add all RTPs but the first which is already included
     for (int i = 1; i < rtpList.size(); i++) {
       list.add( getRtp(rtpList.get(i) ));
     }
     playCounter = playCounter + rtpList.size()-1; // set to snr of last packet
-    //TODO1 if list is fragmented return null or implement JPEG error concealment
+    //TODO if list is fragmented return null or implement JPEG error concealment
 
     System.out.println("-> Get list of " + list.size() + " RTPs with TS: " + (0xFFFFFFFFL & ts));
     return list;
@@ -273,7 +273,7 @@ public class FecHandler {
    * @return true if possible
    */
   private boolean checkCorrection(int nr) {
-    //TODO complete this method!
+    //TASK complete this method!
 
       //get Snr of corresponding fec packet
       Integer currFec = fecNr.get(nr);
@@ -305,7 +305,7 @@ public class FecHandler {
    * @return RTP packet
    */
   private RTPpacket correctRtp(int nr) {
-    //TODO complete this method!
+    //TASK complete this method!
     //correspondign fec Packet
     Integer currFec = fecNr.get(nr);
     //set curr fec Packet
@@ -337,7 +337,7 @@ public class FecHandler {
    * @param nr Media Sequence Nr.
    */
   private void clearStack(int nr) {
-    //TODO complete this method!
+    //TASK complete this method!
       Integer currFECNr = fecNr.get(nr);
       int currTs = rtpStack.get(nr).TimeStamp;
       rtpStack.remove(nr);

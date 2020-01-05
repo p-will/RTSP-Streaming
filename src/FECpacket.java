@@ -259,7 +259,7 @@ public class FECpacket extends RTPpacket {
     // ignore P,X,CC,M yet
     ptRecovery = 0x7F & fecHeader[1];
     snBase = (0xFF & fecHeader[2]) * 256 + (0xFF & fecHeader[3]);
-    // TODO1 check if correct
+    // TODO check if correct
     tsRecovery =
         (0xFFFFFF & fecHeader[4]) * 0xFFFF
             + (0xFF & fecHeader[5])
@@ -336,7 +336,7 @@ public class FECpacket extends RTPpacket {
    * @return rtp
    */
   public RTPpacket getLostRtp(int snr) {
-    // TODO1 get the correct SNr
+    // TODO get the correct SNr
     return new RTPpacket(ptRecovery, snr  ,tsRecovery, payload, lengthRecovery);
   }
 

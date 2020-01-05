@@ -72,7 +72,7 @@ public class RTPpacket {
 
 
   public void setRtpHeader() {
-    //TODO fill the header array of byte with RTP header fields DONE
+    //TASK fill the header array of byte with RTP header fields DONE
     /*
     header[0] =
     header[1] =
