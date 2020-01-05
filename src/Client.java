@@ -45,7 +45,7 @@ public class Client {
   DatagramSocket RTPsocket; // socket to be used to send and receive UDP packets
   //DatagramSocket FECsocket; // socket to be used to send and receive UDP packets for FEC
   FecHandler fec;
-  static int RTP_RCV_PORT = 25000; // port where the client will receive the RTP packets
+  static int RTP_RCV_PORT = 2500; // port where the client will receive the RTP packets
   // static int FEC_RCV_PORT = 25002; // port where the client will receive the RTP packets
 
   static final int MAX_FRAME_SIZE = 65536;
@@ -379,7 +379,7 @@ public class Client {
         fec.rcvRtpPacket(rtp); // stores the received RTP packet in jitter buffer
 
       } catch (InterruptedIOException iioe) {
-        // System.out.println("Nothing to read");
+         //System.out.println("Nothing to read");
       } catch (IOException ioe) {
         System.out.println("Exception caught: " + ioe);
       }

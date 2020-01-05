@@ -279,17 +279,23 @@ public class FecHandler {
       Integer currFec = fecNr.get(nr);
       if(currFec == null)
         return false;
+
+      //check if fec in stack
+      FECpacket tmp = fecStack.get(currFec);
+      if(tmp == null)
+          return false;
+
       //get involved media packets
-      List<Integer> currRTPList = fecList.get(currFec);
+      List<Integer> currRTPList = fecList.get(nr);
       if(currRTPList == null)
         return false;
-
-      //check if involved media packets match lost nr
       for(int i: currRTPList){
-        if(i == nr)
-          return true;
+        if( i == nr )
+            break;
+        if(rtpStack.get(i) == null)
+          return false;
       }
-    return false;
+    return true;
   }
 
   /**
@@ -300,11 +306,29 @@ public class FecHandler {
    */
   private RTPpacket correctRtp(int nr) {
     //TODO complete this method!
-      RTPpacket correctedRTP = rtpStack.get(nr);
-
-      fec.addRtp(correctedRTP);
-
-      return fec.getLostRtp(nr);
+    //correspondign fec Packet
+    Integer currFec = fecNr.get(nr);
+    //set curr fec Packet
+    fec = fecStack.get(currFec);
+    //get involved media packets
+    List<Integer> currRTPList = fecList.get(nr);
+    //number of other RTP Packet for Correction
+    List<Integer> correctionRTPNr = new ArrayList<Integer>();
+    for(int i: currRTPList) {
+      if (i == nr) ;
+      else correctionRTPNr.add(i);
+    }
+    //get other RTP Packet
+    for(int i: correctionRTPNr) {
+      RTPpacket corrRTP = rtpStack.get(i);
+      if (corrRTP == null) {
+        return null;
+      }
+      //get correct RTP Package by XOR-ing FEC^other RTP
+      fec.addRtp(corrRTP);
+    }
+    //get lost RTP
+    return fec.getLostRtp(nr);
   }
 
   /**
@@ -319,9 +343,9 @@ public class FecHandler {
       rtpStack.remove(nr);
       fecStack.remove(currFECNr);
       fecNr.remove(nr);
-      fecList.remove(currFECNr);
+      fecList.remove(nr);
       tsList.remove(currTs);
-
+//      fec = fecStack.get(fecSeqNr);
   }
 
   // *************** Receiver Statistics ***********************************************************

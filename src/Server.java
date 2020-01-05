@@ -188,7 +188,8 @@ public class Server extends JFrame implements ActionListener, ChangeListener {
           theServer.send_RTSP_response(SETUP);
 
           // init the VideoStream object:
-          theServer.video = new VideoReader(VideoFileName);
+          //theServer.video = new VideoReader(VideoFileName);
+          theServer.video = new VideoReader("/home/paulsuse/IdeaProjects/RTSP-Streaming/videos//htw.mjpeg");
           imagenb = 0;
 
           // init RTP socket and FEC
@@ -445,7 +446,7 @@ public class Server extends JFrame implements ActionListener, ChangeListener {
    */
   //TODO Complete the OPTIONS response | DONE
   private String options() {
-    return "Public: DESCRIBE, SETUP, TEARDOWN, PLAY, PAUSE";
+    return "Public: DESCRIBE, SETUP, TEARDOWN, PLAY, PAUSE" + CRLF;
   }
 
 
@@ -461,7 +462,7 @@ public class Server extends JFrame implements ActionListener, ChangeListener {
     rtspBody.write("s=IT2 RTSP Streaming" + CRLF);
     rtspBody.write("t=0 " + CRLF);
     rtspBody.write("i=" + VideoFileName + CRLF);
-    rtspBody.write("m=video " + RTPsocket.getLocalPort() + "RTP/AVP " + CRLF);
+    rtspBody.write("m=video " + RTPsocket.getPort() + "RTP/AVP " + CRLF);
 
     rtspHeader.write("Content-Base: rtsp://" + VideoDir + VideoFileName + CRLF);
     rtspHeader.write("Content-Type: " + "application/sdp" + CRLF);
