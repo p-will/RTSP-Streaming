@@ -455,7 +455,7 @@ public class Client {
               + ""
               +  fec.getNrCorrected() + " / " + fec.getNrNotCorrected()
               + ""
-              + "  Ratio: " + fec.getNrCorrected() / fec.getNrNotCorrected()
+              + "  Ratio: " + (double) (fec.getNrCorrected() / (fec.getNrNotCorrected() > 0 ? fec.getNrNotCorrected() : 1))
               + "");
     }
   }
