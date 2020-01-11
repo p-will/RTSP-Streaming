@@ -64,8 +64,12 @@ public class RTPpacket {
     payload_size = data_length;
     payload = new byte[data_length];
 
-    // fill payload array of byte from data (given in parameter of the constructor)
-    System.arraycopy(data, 0, payload, 0, data_length);
+    try {
+      // fill payload array of byte from data (given in parameter of the constructor)
+      System.arraycopy(data, 0, payload, 0, data_length);
+    }catch(Exception ex){
+      System.out.println(ex.getMessage());
+    }
 
     // ! Do not forget to uncomment method printheader() below, if desired !
   }

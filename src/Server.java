@@ -188,8 +188,7 @@ public class Server extends JFrame implements ActionListener, ChangeListener {
           theServer.send_RTSP_response(SETUP);
 
           // init the VideoStream object:
-          //theServer.video = new VideoReader(VideoFileName);
-          theServer.video = new VideoReader("/home/paulsuse/IdeaProjects/RTSP-Streaming/videos//htw.mjpeg");
+          theServer.video = new VideoReader(VideoFileName);
           imagenb = 0;
 
           // init RTP socket and FEC
@@ -459,10 +458,10 @@ public class Server extends JFrame implements ActionListener, ChangeListener {
     // Write the body first so we can get the size later
     rtspBody.write("v=0" + CRLF);
     rtspBody.write("o=paul " + RTSP_ID + "IN IP4 localhost" + CRLF);
-    rtspBody.write("s=IT2 RTSP Streaming" + CRLF);
+    rtspBody.write("s=htw.mjpeg" + CRLF);
     rtspBody.write("t=0 " + CRLF);
     rtspBody.write("i=" + VideoFileName + CRLF);
-    rtspBody.write("m=video " + RTPsocket.getPort() + "RTP/AVP " + CRLF);
+    rtspBody.write("m=video " + "3333" + "RTP/AVP " + CRLF);
 
     rtspHeader.write("Content-Base: rtsp://" + VideoDir + VideoFileName + CRLF);
     rtspHeader.write("Content-Type: " + "application/sdp" + CRLF);

@@ -45,7 +45,7 @@ public class Client {
   DatagramSocket RTPsocket; // socket to be used to send and receive UDP packets
   //DatagramSocket FECsocket; // socket to be used to send and receive UDP packets for FEC
   FecHandler fec;
-  static int RTP_RCV_PORT = 2500; // port where the client will receive the RTP packets
+  static int RTP_RCV_PORT = 25000; // port where the client will receive the RTP packets
   // static int FEC_RCV_PORT = 25002; // port where the client will receive the RTP packets
 
   static final int MAX_FRAME_SIZE = 65536;
@@ -416,11 +416,11 @@ public class Client {
       // TODO decoding of incomplete list to show fragments of pictures instead of discarding
       if (rtpList == null) return;
 
-      payload = JpegFrame.combineToOneImage(rtpList);
-      System.out.println("Display TS: " + (0xFFFFFFFFL & rtpList.get(0).TimeStamp)
-          + " size: " + payload.length);
 
       try {
+        payload = JpegFrame.combineToOneImage(rtpList);
+        System.out.println("Display TS: " + (0xFFFFFFFFL & rtpList.get(0).TimeStamp)
+                + " size: " + payload.length);
         // get an Image object from the payload bitstream
         Toolkit toolkit = Toolkit.getDefaultToolkit();
         Image image = toolkit.createImage(payload, 0, payload.length);
@@ -455,7 +455,7 @@ public class Client {
               + ""
               +  fec.getNrCorrected() + " / " + fec.getNrNotCorrected()
               + ""
-              + "  Ratio: " + (double) (fec.getNrCorrected() / (fec.getNrNotCorrected() > 0 ? fec.getNrNotCorrected() : 1))
+              + "  Ratio: " +  df.format((double)fec.getNrCorrected() / (fec.getNrLost() > 0 ? (double)fec.getNrLost() : 1)) //Prozentangabe der korrigierten Pakete
               + "");
     }
   }
@@ -567,7 +567,7 @@ public class Client {
       // otherwise, write the Session line from the RTSPid field
       if (request_type.equals("SETUP")) {
         //TASK Complete the Transport Attribute DONE
-        rtspReq += "Transport:rtp/udp; compression; port=" +rtspPort + CRLF;;
+        rtspReq += "Transport:rtp/udp; compression; port=" + RTP_RCV_PORT + CRLF;;
       }
 
       // SessionIS if available

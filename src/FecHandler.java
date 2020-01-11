@@ -290,10 +290,11 @@ public class FecHandler {
       if(currRTPList == null)
         return false;
       for(int i: currRTPList){
-        if( i == nr )
-            break;
-        if(rtpStack.get(i) == null)
-          return false;
+        if( i == nr );
+        else{
+          if(rtpStack.get(i) == null)
+            return false;
+        }
       }
     return true;
   }
@@ -321,14 +322,12 @@ public class FecHandler {
     //get other RTP Packet
     for(int i: correctionRTPNr) {
       RTPpacket corrRTP = rtpStack.get(i);
-      if (corrRTP == null) {
-        return null;
-      }
       //get correct RTP Package by XOR-ing FEC^other RTP
       fec.addRtp(corrRTP);
     }
     //get lost RTP
-    return fec.getLostRtp(nr);
+    RTPpacket correctedRTP = fec.getLostRtp(nr);
+    return correctedRTP;
   }
 
   /**
@@ -339,13 +338,10 @@ public class FecHandler {
   private void clearStack(int nr) {
     //TASK complete this method!
       Integer currFECNr = fecNr.get(nr);
-      int currTs = rtpStack.get(nr).TimeStamp;
       rtpStack.remove(nr);
       fecStack.remove(currFECNr);
       fecNr.remove(nr);
       fecList.remove(nr);
-      tsList.remove(currTs);
-//      fec = fecStack.get(fecSeqNr);
   }
 
   // *************** Receiver Statistics ***********************************************************
