@@ -76,21 +76,6 @@ public class RTPpacket {
 
 
   public void setRtpHeader() {
-    //TASK fill the header array of byte with RTP header fields DONE
-    /*
-    header[0] =
-    header[1] =
-    header[2] =
-    header[3] =
-    header[4] =
-    header[5] =
-    header[6] =
-    header[7] =
-    header[8] =
-    header[8] =
-    header[10] =
-    header[11] =
-     */
     //Version 2 Bits, Padding 1 Bit, Extension 1 Bit, CC 4 Bit
     header[0] |= (Version << 6) | (Padding << 4) | (Extension << 3 ) | CC;
     //Payloadtype

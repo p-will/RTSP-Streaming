@@ -273,7 +273,6 @@ public class FecHandler {
    * @return true if possible
    */
   private boolean checkCorrection(int nr) {
-    //TASK complete this method!
 
       //get Snr of corresponding fec packet
       Integer currFec = fecNr.get(nr);
@@ -306,7 +305,6 @@ public class FecHandler {
    * @return RTP packet
    */
   private RTPpacket correctRtp(int nr) {
-    //TASK complete this method!
     //correspondign fec Packet
     Integer currFec = fecNr.get(nr);
     //set curr fec Packet
@@ -336,7 +334,6 @@ public class FecHandler {
    * @param nr Media Sequence Nr.
    */
   private void clearStack(int nr) {
-    //TASK complete this method!
       Integer currFECNr = fecNr.get(nr);
       rtpStack.remove(nr);
       fecStack.remove(currFECNr);
